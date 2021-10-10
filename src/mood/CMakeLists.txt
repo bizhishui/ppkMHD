@@ -1,6 +1,8 @@
-add_library(mood "")
+project(mood)
 
-target_sources(mood
+add_library(${PROJECT_NAME} "")
+
+target_sources(${PROJECT_NAME}
   PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/monomials_ordering.h
   ${CMAKE_CURRENT_SOURCE_DIR}/monomials_print_utils.h
@@ -28,19 +30,30 @@ target_sources(mood
   ${CMAKE_CURRENT_SOURCE_DIR}/SolverHydroMood.h
   )
 
-target_compile_options(mood
+target_compile_options(${PROJECT_NAME}
   PUBLIC ${KOKKOS_CXX_FLAGS}
   )
-target_include_directories(mood
+target_include_directories(${PROJECT_NAME}
   PUBLIC
   ${CMAKE_SOURCE_DIR}/src
   ${LAPACKE_INCLUDE_DIR}
   )
-target_link_libraries(mood
+target_link_libraries(${PROJECT_NAME}
   PUBLIC
   kokkos
   ${LAPACKE_LIBRARIES}
   ${OpenBLAS_LIB}
   )
 
-  add_library(ppkMHD::mood ALIAS mood)
+  add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+# installing
+FILE(GLOB currHeaders *.h)
+install(TARGETS ${PROJECT_NAME} 
+    RUNTIME DESTINATION ppkMHD/bin 
+    ARCHIVE DESTINATION ppkMHD/lib
+    LIBRARY DESTINATION ppkMHD/lib
+    INCLUDES DESTINATION ppkMHD/include
+    )
+
+install(FILES  ${currHeaders} DESTINATION ppkMHD/include)

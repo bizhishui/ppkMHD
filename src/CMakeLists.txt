@@ -26,21 +26,21 @@ endif(PAPI_FOUND)
 #
 # ppkMHD executable
 #
-add_executable(${PROJECT_NAME} "")
+add_executable(${CMAKE_PROJECT_NAME} "")
 
-target_sources(${PROJECT_NAME}
+target_sources(${CMAKE_PROJECT_NAME}
   PRIVATE
   main.cpp
   #${BACKWARD_ENABLE}
   )
 
-target_include_directories(${PROJECT_NAME}
+target_include_directories(${CMAKE_PROJECT_NAME}
   PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}/src
   )
 
-target_link_libraries(${PROJECT_NAME}
+target_link_libraries(${CMAKE_PROJECT_NAME}
   PUBLIC
   ppkMHD::solver_factory
   ppkMHD::config
@@ -54,13 +54,13 @@ target_link_libraries(${PROJECT_NAME}
 #add_backward(${PROJECT_NAME})
 
 if (USE_SDM)
-  target_link_libraries(${PROJECT_NAME}
+  target_link_libraries(${CMAKE_PROJECT_NAME}
     PUBLIC
     ppkMHD::sdm)
 endif()
 
 if (USE_MOOD)
-  target_link_libraries(${PROJECT_NAME}
+  target_link_libraries(${CMAKE_PROJECT_NAME}
     PUBLIC
     ppkMHD::mood 
     ${LAPACKE_LIBRARIES}
@@ -68,7 +68,10 @@ if (USE_MOOD)
 endif(USE_MOOD)
 
 if (USE_MPI)
-  target_link_libraries(${PROJECT_NAME}
+  target_link_libraries(${CMAKE_PROJECT_NAME}
     PUBLIC
     ppkMHD::mpiUtils)
 endif(USE_MPI)
+
+# installing
+install(TARGETS  ${CMAKE_PROJECT_NAME} DESTINATION ppkMHD/bin/)

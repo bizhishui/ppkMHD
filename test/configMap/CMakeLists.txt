@@ -3,10 +3,14 @@
 #
 
 ##############################################
-add_executable(ConfigMapTest
+project(configMap)
+
+set(test_configMap_target ConfigMapTest)
+
+add_executable(${test_configMap_target}
   ConfigMapTest.cpp)
 
-target_link_libraries(ConfigMapTest
+target_link_libraries(${test_configMap_target}
   PRIVATE
   ppkMHD::config)
 
@@ -24,3 +28,7 @@ if(USE_MPI)
     ppkMHD::mpiUtils)
   
 endif(USE_MPI)
+
+
+# installing
+install(TARGETS  ${test_configMap_target} DESTINATION ppkMHD/bin/test/backward-cpp/)
