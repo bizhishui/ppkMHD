@@ -1,5 +1,7 @@
 # sdm is a header only library
-add_library(sdm INTERFACE)
+project(sdm)
+
+add_library(${PROJECT_NAME} INTERFACE)
 
 # INTERFACE library requires no source arguments
 # target_sources(sdm
@@ -22,13 +24,28 @@ add_library(sdm INTERFACE)
 #   ${CMAKE_CURRENT_SOURCE_DIR}/SolverHydroSDM.h
 #   )
 
-target_include_directories(sdm
+target_include_directories(${PROJECT_NAME}
   INTERFACE
   ${CMAKE_SOURCE_DIR}/src
   )
-target_link_libraries(sdm
+target_link_libraries(${PROJECT_NAME}
   INTERFACE
   kokkos
   )
 
-add_library(ppkMHD::sdm ALIAS sdm)
+add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+
+# installing
+FILE(GLOB currHeaders1 *.h)
+FILE(GLOB currHeaders2 init/*.h)
+target_include_directories(${PROJECT_NAME} PUBLIC $$<INSTALL_INTERFACE:ppkMHD/include)
+install(TARGETS ${PROJECT_NAME} 
+    RUNTIME DESTINATION ppkMHD/bin 
+    ARCHIVE DESTINATION ppkMHD/lib
+    LIBRARY DESTINATION ppkMHD/lib
+    INCLUDES DESTINATION ppkMHD/include
+    )
+
+install(FILES  ${currHeaders1} DESTINATION ppkMHD/include)
+install(FILES  ${currHeaders2} DESTINATION ppkMHD/include/init)

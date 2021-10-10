@@ -1,6 +1,8 @@
-add_library(mpiUtils "")
+project(mpiUtils)
 
-target_sources (mpiUtils
+add_library(${PROJECT_NAME} "")
+
+target_sources (${PROJECT_NAME}
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/GlobalMpiSession.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/TestForException.h
@@ -16,14 +18,26 @@ target_sources (mpiUtils
   ${CMAKE_CURRENT_SOURCE_DIR}/MpiCommCart.h
   )
 #Set target properties
-target_include_directories(mpiUtils
+target_include_directories(${PROJECT_NAME}
   PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/
 )
-target_link_libraries (mpiUtils PUBLIC MPI::MPI_CXX)
+target_link_libraries (${PROJECT_NAME} PUBLIC MPI::MPI_CXX)
 
 #Add an alias so that library can be used inside the build tree
-add_library(ppkMHD::mpiUtils ALIAS mpiUtils)
+add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+# installing
+FILE(GLOB currHeaders *.h)
+target_include_directories(${PROJECT_NAME} PUBLIC $$<INSTALL_INTERFACE:ppkMHD/include)
+install(TARGETS ${PROJECT_NAME} 
+    RUNTIME DESTINATION ppkMHD/bin 
+    ARCHIVE DESTINATION ppkMHD/lib
+    LIBRARY DESTINATION ppkMHD/lib
+    INCLUDES DESTINATION ppkMHD/include
+    )
+
+install(FILES  ${currHeaders} DESTINATION ppkMHD/include)

@@ -1,8 +1,10 @@
 #######################
 ### SHARED ############
 #######################
-add_library(shared "")
-target_sources (shared
+project(shared)
+
+add_library(${PROJECT_NAME} "")
+target_sources (${PROJECT_NAME}
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/problems/BlastParams.h
   ${CMAKE_CURRENT_SOURCE_DIR}/problems/DiskParams.h
@@ -37,44 +39,72 @@ target_sources (shared
   ${CMAKE_CURRENT_SOURCE_DIR}/solver_utils.h
   )
 
-target_link_libraries(shared
+target_link_libraries(${PROJECT_NAME}
   PUBLIC
   kokkos
   ppkMHD::config
   ppkMHD::io
   )
 if(USE_MPI)
-  target_link_libraries(shared
+  target_link_libraries(${PROJECT_NAME}
   PUBLIC
   ppkMHD::mpiUtils)
 endif(USE_MPI)
 
 #Add an alias so that library can be used inside the build tree
-add_library(ppkMHD::shared ALIAS shared)
+add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+# installing
+FILE(GLOB currHeaders1 *.h)
+FILE(GLOB currHeaders2 problems/*.h)
+set(currHeaders ${currHeaders1} ${currHeaders2})
+target_include_directories(${PROJECT_NAME} PUBLIC $$<INSTALL_INTERFACE:ppkMHD/include)
+install(TARGETS ${PROJECT_NAME} 
+    RUNTIME DESTINATION ppkMHD/bin 
+    ARCHIVE DESTINATION ppkMHD/lib
+    LIBRARY DESTINATION ppkMHD/lib
+    INCLUDES DESTINATION ppkMHD/include
+    )
+
+install(FILES  ${currHeaders} DESTINATION ppkMHD/include)
+
 
 #######################
 ### SOLVER FACTORY ####
 #######################
-add_library(solver_factory "")
-target_sources (solver_factory
+project(solver_factory)
+add_library(${PROJECT_NAME} "")
+target_sources (${PROJECT_NAME}
   PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/SolverFactory.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/SolverFactory.h
   )
-target_include_directories(solver_factory
+target_include_directories(${PROJECT_NAME}
   PUBLIC
   ${CMAKE_SOURCE_DIR}/src
   ${CMAKE_SOURCE_DIR}/src/muscl
 )
-target_link_libraries(solver_factory
+target_link_libraries(${PROJECT_NAME}
   PUBLIC
   kokkos
   )
 if(USE_MPI)
-  target_link_libraries(solver_factory
+  target_link_libraries(${PROJECT_NAME}
   PUBLIC
   ppkMHD::mpiUtils)
 endif(USE_MPI)
 
 #Add an alias so that library can be used inside the build tree
-add_library(ppkMHD::solver_factory ALIAS solver_factory)
+add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+
+# installing
+FILE(GLOB currHeaders0 *.h)
+target_include_directories(${PROJECT_NAME} PUBLIC $$<INSTALL_INTERFACE:ppkMHD/include)
+install(TARGETS ${PROJECT_NAME} 
+    RUNTIME DESTINATION ppkMHD/bin 
+    ARCHIVE DESTINATION ppkMHD/lib
+    LIBRARY DESTINATION ppkMHD/lib
+    INCLUDES DESTINATION ppkMHD/include
+    )
+
+install(FILES  ${currHeaders0} DESTINATION ppkMHD/include)
