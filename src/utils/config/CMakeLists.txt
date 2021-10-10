@@ -26,7 +26,6 @@ add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 # installing
 FILE(GLOB currHeaders1 *.h)
 FILE(GLOB currHeaders2 inih/*.h)
-set(currHeaders ${currHeaders1} ${currHeaders2})
 target_include_directories(${PROJECT_NAME} PUBLIC $$<INSTALL_INTERFACE:ppkMHD/include)
 install(TARGETS ${PROJECT_NAME} 
     RUNTIME DESTINATION ppkMHD/bin 
@@ -35,4 +34,5 @@ install(TARGETS ${PROJECT_NAME}
     INCLUDES DESTINATION ppkMHD/include
     )
 
-install(FILES  ${currHeaders} DESTINATION ppkMHD/include)
+install(FILES  ${currHeaders1} DESTINATION ppkMHD/include)
+install(FILES  ${currHeaders2} DESTINATION ppkMHD/inih/include)
