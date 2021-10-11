@@ -47,13 +47,9 @@ target_link_libraries(${PROJECT_NAME}
 
   add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
-# installing
-FILE(GLOB currHeaders *.h)
+# # installing
 install(TARGETS ${PROJECT_NAME} 
     RUNTIME DESTINATION ppkMHD/bin 
     ARCHIVE DESTINATION ppkMHD/lib
     LIBRARY DESTINATION ppkMHD/lib
-    INCLUDES DESTINATION ppkMHD/include
     )
-
-install(FILES  ${currHeaders} DESTINATION ppkMHD/include)

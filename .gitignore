@@ -4,6 +4,7 @@ compile_commands.json
 euler2d.omp
 euler2d.cuda
 build_*
+build
 !build_doc.rst
 .ccls-cache
 .vscode

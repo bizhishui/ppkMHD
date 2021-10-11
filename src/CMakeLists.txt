@@ -74,4 +74,34 @@ if (USE_MPI)
 endif(USE_MPI)
 
 # installing
-install(TARGETS  ${CMAKE_PROJECT_NAME} DESTINATION ppkMHD/bin/)
+install(TARGETS  ${CMAKE_PROJECT_NAME} DESTINATION ppkMHD/bin)
+
+install(DIRECTORY utils 
+        DESTINATION ppkMHD/include
+        FILES_MATCHING 
+        PATTERN "*.h")
+
+install(DIRECTORY shared 
+        DESTINATION ppkMHD/include
+        FILES_MATCHING 
+        PATTERN "*.h")
+
+install(DIRECTORY muscl 
+        DESTINATION ppkMHD/include
+        FILES_MATCHING 
+        PATTERN "*.h")
+
+if(USE_MOOD)
+  install(DIRECTORY mood 
+          DESTINATION ppkMHD/include
+          FILES_MATCHING 
+          PATTERN "*.h")
+endif(USE_MOOD)
+
+if(USE_SDM)
+  install(DIRECTORY sdm 
+          DESTINATION ppkMHD/include
+          FILES_MATCHING 
+          PATTERN "*.h")
+endif(USE_SDM)
+

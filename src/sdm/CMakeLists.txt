@@ -37,14 +37,9 @@ add_library(ppkMHD::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 
 
 # installing
-FILE(GLOB currHeaders1 *.h)
-FILE(GLOB currHeaders2 init/*.h)
 install(TARGETS ${PROJECT_NAME} 
     RUNTIME DESTINATION ppkMHD/bin 
     ARCHIVE DESTINATION ppkMHD/lib
     LIBRARY DESTINATION ppkMHD/lib
-    INCLUDES DESTINATION ppkMHD/include
     )
 
-install(FILES  ${currHeaders1} DESTINATION ppkMHD/include)
-install(FILES  ${currHeaders2} DESTINATION ppkMHD/include/init)
