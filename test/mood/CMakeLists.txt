@@ -6,7 +6,7 @@
 add_executable(test_monomials_ordering "")
 target_sources(test_monomials_ordering 
   PUBLIC
-  test_monomials_ordering.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_monomials_ordering.cpp)
 target_link_libraries(test_monomials_ordering
   PUBLIC
   ppkMHD::mood )
@@ -15,7 +15,7 @@ target_link_libraries(test_monomials_ordering
 add_executable(test_print_monomial_map "")
 target_sources(test_print_monomial_map
   PUBLIC
-  test_print_monomial_map.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_print_monomial_map.cpp)
 target_link_libraries(test_print_monomial_map
   PUBLIC
   ppkMHD::mood 
@@ -25,7 +25,7 @@ target_link_libraries(test_print_monomial_map
 add_executable(test_polynomial "")
 target_sources(test_polynomial
   PUBLIC
-  test_polynomial.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_polynomial.cpp)
 target_link_libraries(test_polynomial
   PUBLIC
   ppkMHD::mood 
@@ -35,7 +35,7 @@ target_link_libraries(test_polynomial
 add_executable(test_stencil "")
 target_sources(test_stencil
   PUBLIC
-  test_stencil.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_stencil.cpp)
 target_link_libraries(test_stencil
   PUBLIC
   ppkMHD::mood
@@ -45,7 +45,7 @@ target_link_libraries(test_stencil
 add_executable(test_matrix_qr "")
 target_sources(test_matrix_qr 
   PUBLIC
-  test_matrix_qr.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_matrix_qr.cpp)
 target_link_libraries(test_matrix_qr
   PUBLIC
   ppkMHD::mood 
@@ -55,7 +55,7 @@ target_link_libraries(test_matrix_qr
 add_executable(test_reconstruct_2d "")
 target_sources(test_reconstruct_2d
   PUBLIC
-  test_reconstruct_2d.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_reconstruct_2d.cpp)
 target_link_libraries(test_reconstruct_2d 
   PUBLIC
   ppkMHD::mood
@@ -65,7 +65,7 @@ target_link_libraries(test_reconstruct_2d
 add_executable(test_reconstruct_3d "")
 target_sources(test_reconstruct_3d 
   PUBLIC
-  test_reconstruct_3d.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_reconstruct_3d.cpp)
 target_link_libraries(test_reconstruct_3d
   PUBLIC
   ppkMHD::mood
@@ -75,7 +75,7 @@ target_link_libraries(test_reconstruct_3d
 add_executable(test_mood_functor "")
 target_sources(test_mood_functor
   PUBLIC
-  test_mood_functor.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_mood_functor.cpp)
 target_link_libraries(test_mood_functor 
   PUBLIC 
   ppkMHD::shared
@@ -93,7 +93,7 @@ endif(USE_MPI)
 add_executable(test_mood_functor_flux "")
 target_sources(test_mood_functor_flux
   PUBLIC
-  test_mood_functor_flux.cpp)
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_mood_functor_flux.cpp)
 target_link_libraries(test_mood_functor_flux
   PUBLIC
   ppkMHD::shared

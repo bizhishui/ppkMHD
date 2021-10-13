@@ -1,5 +1,5 @@
 # set minimal version the one requested by kokkos
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.12)
 
 #
 # default local cmake macro repository

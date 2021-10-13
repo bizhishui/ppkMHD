@@ -1,10 +1,8 @@
 #!/bin/bash
 
-# RUN it with source, not bash!!!
-
 # compiler type : GNU, INTEL, CLANG, ...
-compiler=GNU
-enable_mpi=true
+compiler=INTEL
+enable_mpi=false
 
 verbose=true
 module purge
@@ -29,7 +27,7 @@ case $compiler in
     # intel compiler
     module load userspace/all
     module load cmake/3.20.2
-    module load intel-suite
+    module load intel-compiler/64/2020.2.254
     
     if [ "$enable_mpi" = true ] ; then
 	# intel mpicxx is already rooted to use icpc

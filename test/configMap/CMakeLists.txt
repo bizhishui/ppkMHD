@@ -31,4 +31,4 @@ endif(USE_MPI)
 
 
 # installing
-install(TARGETS  ${test_configMap_target} DESTINATION ppkMHD/bin/test/backward-cpp/)
+install(TARGETS  ${test_configMap_target} DESTINATION ppkMHD/bin/test/configMap/)
