@@ -14,16 +14,17 @@
 
 #include "utils/mpiUtils/MpiCommCart.h"
 
-struct HydroParamsMpi : HydroParams {
-  
+struct HydroParamsMpi : HydroParams
+{
 
-  
-    
+
+
+
   //! constructor
   HydroParamsMpi() : HydroParams() {}
 
   void setup(ConfigMap& configMap);
-  
+
 }; // struct HydroParamsMpi
 
 

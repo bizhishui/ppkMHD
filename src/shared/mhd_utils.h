@@ -12,7 +12,8 @@
 #ifndef MHD_UTILS_H_
 #define MHD_UTILS_H_
 
-namespace ppkMHD {
+namespace ppkMHD
+{
 
 /**
  * max value out of 4
@@ -24,7 +25,7 @@ real_t FMAX4(real_t a0, real_t a1, real_t a2, real_t a3)
   returnVal = ( a1 > returnVal) ? a1 : returnVal;
   returnVal = ( a2 > returnVal) ? a2 : returnVal;
   returnVal = ( a3 > returnVal) ? a3 : returnVal;
-  
+
   return returnVal;
 } // FMAX4
 
@@ -38,7 +39,7 @@ real_t FMIN4(real_t a0, real_t a1, real_t a2, real_t a3)
   returnVal = ( a1 < returnVal) ? a1 : returnVal;
   returnVal = ( a2 < returnVal) ? a2 : returnVal;
   returnVal = ( a3 < returnVal) ? a3 : returnVal;
-  
+
   return returnVal;
 } // FMIN4
 
@@ -53,16 +54,16 @@ real_t FMAX5(real_t a0, real_t a1, real_t a2, real_t a3, real_t a4)
   returnVal = ( a2 > returnVal) ? a2 : returnVal;
   returnVal = ( a3 > returnVal) ? a3 : returnVal;
   returnVal = ( a4 > returnVal) ? a4 : returnVal;
-  
+
   return returnVal;
 } // FMAX5
 
 /**
  * Compute the fast magnetosonic velocity.
- * 
+ *
  * IU is index to Vnormal
  * IA is index to Bnormal
- * 
+ *
  * IV, IW are indexes to Vtransverse1, Vtransverse2,
  * IB, IC are indexes to Btransverse1, Btransverse2
  *
@@ -70,14 +71,17 @@ real_t FMAX5(real_t a0, real_t a1, real_t a2, real_t a3, real_t a4)
 template <ComponentIndex3D dir>
 KOKKOS_INLINE_FUNCTION
 real_t find_speed_fast(const MHDState& qvar,
-		       const HydroParams& params)
+                       const HydroParams& params)
 {
 
   const real_t& gamma0  = params.settings.gamma0;
   real_t d,p,a,b,c,b2,c2,d2,cf;
 
-  d=qvar[ID]; p=qvar[IP];
-  a=qvar[IA]; b=qvar[IB]; c=qvar[IC];
+  d=qvar[ID];
+  p=qvar[IP];
+  a=qvar[IA];
+  b=qvar[IB];
+  c=qvar[IC];
 
   b2 = a*a + b*b + c*c;
   c2 = gamma0 * p / d;
@@ -99,7 +103,7 @@ real_t find_speed_fast(const MHDState& qvar,
  * Compute the Alfven velocity.
  *
  * The structure of qvar is :
- * rho, pressure, 
+ * rho, pressure,
  * vnormal, vtransverse1, vtransverse2,
  * bnormal, btransverse1, btransverse2
  *
@@ -137,9 +141,9 @@ real_t find_speed_alfven(real_t d, real_t a)
  * Only used in Riemann solver HLL (probably cartesian only
  * compatible, since gas pressure is included).
  *
- * variables. The structure of qvar is : 
+ * variables. The structure of qvar is :
  * rho, pressure,
- * vnormal, vtransverse1, vtransverse2, 
+ * vnormal, vtransverse1, vtransverse2,
  * bnormal, btransverse1, btransverse2.
  *
  * @param[in]  qvar state vector (primitive variables)
@@ -149,20 +153,23 @@ real_t find_speed_alfven(real_t d, real_t a)
  */
 KOKKOS_INLINE_FUNCTION
 void find_mhd_flux(const MHDState& qvar,
-		   MHDState &cvar,
-		   MHDState &ff,
-		   const HydroParams& params)
+                   MHDState &cvar,
+                   MHDState &ff,
+                   const HydroParams& params)
 {
 
   const real_t &gamma0 = params.settings.gamma0;
-  
+
   // ISOTHERMAL
   const real_t &cIso = params.settings.cIso;
   real_t p;
-  if (cIso>0) {
+  if (cIso>0)
+  {
     // recompute pressure
     p = qvar[ID]*cIso*cIso;
-  } else {
+  }
+  else
+  {
     p = qvar[IP];
   }
   // end ISOTHERMAL
@@ -172,8 +179,12 @@ void find_mhd_flux(const MHDState& qvar,
 
   real_t d, u, v, w, a, b, c;
   d=qvar[ID];
-  u=qvar[IU]; v=qvar[IV]; w=qvar[IW];
-  a=qvar[IA]; b=qvar[IB]; c=qvar[IC];
+  u=qvar[IU];
+  v=qvar[IV];
+  w=qvar[IW];
+  a=qvar[IA];
+  b=qvar[IB];
+  c=qvar[IC];
 
   real_t ecin = 0.5*(u*u+v*v+w*w)*d;
   real_t emag = 0.5*(a*a+b*b+c*c);
@@ -215,12 +226,12 @@ void find_mhd_flux(const MHDState& qvar,
 template<DimensionType NDIM>
 KOKKOS_INLINE_FUNCTION
 void fast_mhd_speed(const MHDState& qState,
-		    real_t (&fastMagSpeed)[3],
-		    const HydroParams& params)
+                    real_t (&fastMagSpeed)[3],
+                    const HydroParams& params)
 {
 
   const real_t &gamma0 = params.settings.gamma0;
-  
+
   const real_t& rho = qState[ID];
   const real_t& p   = qState[IP];
   /*const real_t& vx  = qState[IU];
@@ -260,7 +271,8 @@ void fast_mhd_speed(const MHDState& qState,
   fastMagSpeed[IY] = fast_speed;
 
   // compute fast magnetosonic speed along Z
-  if (NDIM == THREE_D) {
+  if (NDIM == THREE_D)
+  {
     mag_perp =  (bx*bx + by*by)  /  rho;
     alfv     =   bz*bz           /  rho;
 
@@ -292,8 +304,8 @@ void fast_mhd_speed(const MHDState& qState,
 template<DimensionType NDIM>
 KOKKOS_INLINE_FUNCTION
 void find_speed_info(const MHDState qState,
-		     real_t (&fastInfoSpeed)[3],
-		     const HydroParams& params)
+                     real_t (&fastInfoSpeed)[3],
+                     const HydroParams& params)
 {
 
   const real_t& gamma0  = params.settings.gamma0;
@@ -302,8 +314,11 @@ void find_speed_info(const MHDState qState,
   const real_t &v = qState[IV];
   const real_t &w = qState[IW];
 
-  d=qState[ID]; p=qState[IP];
-  a=qState[IA]; b=qState[IB]; c=qState[IC];
+  d=qState[ID];
+  p=qState[IP];
+  a=qState[IA];
+  b=qState[IB];
+  c=qState[IC];
 
   /*
    * compute fastest info speed along X
@@ -328,7 +343,8 @@ void find_speed_info(const MHDState qState,
 
 
   // compute fastest info speed along Z
-  if (NDIM == THREE_D) {
+  if (NDIM == THREE_D)
+  {
     cf = SQRT( d2 + SQRT(d2*d2 - c2*c*c/d) );
 
     fastInfoSpeed[IZ] = cf+FABS(w);
@@ -347,7 +363,7 @@ void find_speed_info(const MHDState qState,
  */
 KOKKOS_INLINE_FUNCTION
 real_t find_speed_info(const MHDState& qState,
-		       const HydroParams& params)
+                       const HydroParams& params)
 {
 
   const real_t& gamma0  = params.settings.gamma0;
@@ -356,8 +372,11 @@ real_t find_speed_info(const MHDState& qState,
   //const real_t& v = qState[IV];
   //const real_t& w = qState[IW];
 
-  d=qState[ID]; p=qState[IP];
-  a=qState[IA]; b=qState[IB]; c=qState[IC];
+  d=qState[ID];
+  p=qState[IP];
+  a=qState[IA];
+  b=qState[IB];
+  c=qState[IC];
 
   // compute fastest info speed along X
   b2 = a*a + b*b + c*c;
